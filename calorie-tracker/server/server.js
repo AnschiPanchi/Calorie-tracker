@@ -11,7 +11,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: ["https://your-nutri-app.vercel.app"], // <-- Put your live frontend link here
+    origin: ["https://calorie-tracker-dv42.vercel.app"], // <-- Put your live frontend link here
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
