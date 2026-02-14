@@ -10,7 +10,11 @@ const logRoutes = require('./routes/logs.js');
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: ["https://your-nutri-app.vercel.app"], // <-- Put your live frontend link here
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 app.use(express.json());
 
 // ROUTE MOUNTING
