@@ -16,6 +16,7 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
+<<<<<<< HEAD
   origin: function (origin, callback) {
     // Allows requests with no origin (like mobile apps) or matching our list
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
@@ -25,6 +26,11 @@ app.use(cors({
     }
   },
   credentials: true
+=======
+    origin: ["https://calorie-tracker-dv42.vercel.app"], // <-- Put your live frontend link here
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+>>>>>>> db4419630956d5db205be3f2c1eec595b348c046
 }));
 app.use(express.json());
 
