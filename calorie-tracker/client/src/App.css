@@ -324,19 +324,29 @@ body {
 /* --- 4. DASHBOARD GRID SYSTEM --- */
 .app-wrapper {
   display: grid;
-  grid-template-columns: 300px 1fr 340px; /* Desktop View */
+  /* 300px for Meter, 1fr for Search (auto-growing), 340px for History Bar */
+  grid-template-columns: 300px 1fr 340px; 
   gap: 30px;
   max-width: 1440px;
   margin: 0 auto;
   padding: 30px;
-  align-items: start;
+  align-items: start; /* Prevents components from stretching vertically */
 }
 
-.sidebar-sticky { 
-  position: sticky; 
-  top: 100px; 
-  height: calc(100vh - 130px); 
-  overflow-y: auto; 
+/* Ensure the History Bar (Right Sidebar) is sticky while scrolling */
+.sidebar-sticky {
+  position: sticky;
+  top: 100px; /* Locked distance from top-nav */
+  height: calc(100vh - 130px);
+  overflow-y: auto;
+}
+
+/* Fix for the internal log items */
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* Ensures it fills the 340px sidebar width */
 }
 
 /* --- 5. FOOD GRID --- */
