@@ -1,4 +1,4 @@
-/* 1. CLEANED GLOBAL THEME */
+/* --- 1. SINGLE THEME DEFINITION --- */
 :root {
   --primary: #10b981;
   --primary-dark: #059669;
@@ -8,7 +8,7 @@
   --text-main: #1e293b;
   --text-sub: #64748b;
   --border: #e2e8f0;
-  --text-dark: #0f172a; /* Merged from your 2nd root */
+  --text-dark: #0f172a;
 }
 
 * { box-sizing: border-box; }
@@ -18,10 +18,10 @@ body {
   background-color: var(--bg); 
   font-family: 'Inter', sans-serif; 
   color: var(--text-main); 
-  overflow-x: hidden; /* Prevent horizontal scroll bugs */
+  overflow-x: hidden; /* Prevents horizontal scroll on mobile */
 }
 
-/* 2. AUTH OVERLAY (KEEPING YOUR DESIGN) */
+/* --- 2. AUTH OVERLAY (CENTERED) --- */
 .auth-overlay {
   position: fixed;
   inset: 0;
@@ -33,10 +33,38 @@ body {
   z-index: 9999;
 }
 
-/* 3. DASHBOARD LAYOUT */
+.auth-card {
+  background: var(--card);
+  padding: 40px;
+  border-radius: 28px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+/* --- 3. TOP NAVIGATION --- */
+.top-nav {
+  height: 70px;
+  background: var(--card);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-left { display: flex; align-items: center; gap: 30px; }
+.nav-logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); cursor: pointer; }
+
+/* --- 4. DASHBOARD GRID SYSTEM --- */
 .app-wrapper {
   display: grid;
-  grid-template-columns: 300px 1fr 340px;
+  grid-template-columns: 300px 1fr 340px; /* Desktop View */
   gap: 30px;
   max-width: 1440px;
   margin: 0 auto;
@@ -44,30 +72,41 @@ body {
   align-items: start;
 }
 
-/* 4. FIXED RESPONSIVE DESIGN */
+.sidebar-sticky { 
+  position: sticky; 
+  top: 100px; 
+  height: calc(100vh - 130px); 
+  overflow-y: auto; 
+}
+
+/* --- 5. FOOD GRID --- */
+.results-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+  gap: 20px; 
+}
+
+/* --- 6. MEDIA QUERIES (THE CRITICAL FIX) --- */
 @media (max-width: 1200px) {
   .app-wrapper {
-    grid-template-columns: 1fr 1fr; /* Tablet: 2 columns */
+    grid-template-columns: 1fr 1fr; /* Two columns for tablets */
   }
   .right-sidebar { grid-column: 1 / -1; }
 }
 
 @media (max-width: 768px) {
   .app-wrapper {
-    grid-template-columns: 1fr; /* Mobile: STACK EVERYTHING */
+    grid-template-columns: 1fr; /* SINGLE COLUMN STACK FOR MOBILE */
     padding: 15px;
   }
-
-  .sidebar-sticky { 
-    position: relative; /* Sticky doesn't work well on mobile stack */
-    top: 0;
-    height: auto; 
+  
+  .sidebar-sticky {
+    position: static;
+    height: auto;
   }
 
-  .results-grid {
-    grid-template-columns: 1fr; /* Single food card per row */
-  }
-
-  .nav-left { gap: 10px; }
+  .results-grid { grid-template-columns: 1fr; }
   .user-name { display: none; }
 }
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
