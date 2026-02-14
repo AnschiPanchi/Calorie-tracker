@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+// Use the same variable name as in App.jsx
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const Auth = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
@@ -10,17 +13,18 @@ const Auth = ({ onLogin }) => {
     e.preventDefault();
     setError('');
     
-    // Using the 5000 port where your server is running
     const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
     
     try {
-      const res = await axios.post(`http://localhost:5000${endpoint}`, {
+      // FIXED: Now uses the API_BASE_URL variable
+      const res = await axios.post(`${API_BASE_URL}${endpoint}`, {
         ...formData,
-        email: formData.email.toLowerCase() // Matching your server's case-insensitive logic
+        email: formData.email.toLowerCase()
       });
       
       onLogin(res.data);
     } catch (err) {
+      // Improved error message for debugging
       setError(err.response?.data?.error || 'Authentication failed. Check your connection.');
     }
   };
