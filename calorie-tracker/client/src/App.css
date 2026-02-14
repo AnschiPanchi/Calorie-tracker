@@ -324,13 +324,27 @@ body {
 /* --- 4. DASHBOARD GRID SYSTEM --- */
 .app-wrapper {
   display: grid;
-  /* 300px for Meter, 1fr for Search (auto-growing), 340px for History Bar */
+  /* Fixed widths for sidebars, 1fr (flexible) for the middle search bar */
   grid-template-columns: 300px 1fr 340px; 
   gap: 30px;
   max-width: 1440px;
   margin: 0 auto;
   padding: 30px;
-  align-items: start; /* Prevents components from stretching vertically */
+  align-items: start;
+}
+
+.main-content {
+  /* This ensures the search bar stays centered in its own middle column */
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  width: 100%;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 600px; /* Optional: keeps the search bar from getting too wide */
+  margin: 0 auto 30px;
 }
 
 /* Ensure the History Bar (Right Sidebar) is sticky while scrolling */
