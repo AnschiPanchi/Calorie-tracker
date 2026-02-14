@@ -21,45 +21,305 @@ body {
   overflow-x: hidden; /* Prevents horizontal scroll on mobile */
 }
 
+/* --- HISTORY LOG & DELETE BUTTONS --- */
+.history-container {
+  background: var(--card);
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: #fdfdfd;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+}
+
+.log-item:hover {
+  border-color: var(--primary);
+  background: white;
+}
+
+/* THE FIX: Professional Delete Button */
+.delete-log-btn {
+  background: #fef2f2; /* Light red background */
+  border: 1px solid #fee2e2;
+  color: var(--danger); /* Red text/icon */
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.delete-log-btn:hover {
+  background: var(--danger); /* Solid red on hover */
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* --- SEARCH BAR & BUTTON STYLING --- */
+.search-container {
+  background: var(--card);
+  padding: 12px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.search-form { 
+  display: flex; 
+  gap: 12px; 
+}
+
+.search-input {
+  flex: 1;
+  padding: 14px 20px;
+  border: 2px solid #f1f5f9;
+  border-radius: 12px;
+  outline: none;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus { 
+  border-color: var(--primary); 
+}
+
+.search-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.search-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+/* --- LOG ITEM & DELETE BUTTON STYLING --- */
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+
+.delete-log-btn {
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  color: var(--danger);
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.delete-log-btn:hover {
+  background: var(--danger);
+  color: white;
+  transform: scale(1.1);
+}
+
 /* --- 2. AUTH OVERLAY (CENTERED) --- */
+/* --- AUTH OVERLAY - FULL SCREEN CENTERING --- */
 .auth-overlay {
   position: fixed;
   inset: 0;
+  /* Soft gradient background */
   background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.1), transparent),
-              radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), var(--bg));
+              radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), #f8fafc);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; 
+  align-items: center;     
   z-index: 9999;
 }
 
 .auth-card {
-  background: var(--card);
-  padding: 40px;
-  border-radius: 28px;
+  background: #ffffff;
+  padding: 48px;
+  border-radius: 32px;
   width: 100%;
   max-width: 440px;
   box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.15);
   text-align: center;
-  border: 1px solid var(--border);
+  border: 1px solid #e2e8f0;
 }
 
+.auth-header h2 { font-size: 2.4rem; font-weight: 900; color: #0f172a; margin: 0; letter-spacing: -1px; }
+.auth-header p { color: #64748b; margin: 12px 0 32px; font-weight: 500; font-size: 1.1rem; }
+
+/* --- FORM INPUTS --- */
+.auth-form { display: flex; flex-direction: column; gap: 24px; text-align: left; }
+
+.input-group label { 
+  display: block;
+  font-size: 0.95rem; 
+  font-weight: 700; 
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 16px;
+  background: #f1f5f9;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.auth-form input:focus { 
+  background: white;
+  border-color: #10b981; 
+  outline: none; 
+  box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.15); 
+}
+
+/* --- THE POWER BUTTON --- */
+.auth-submit-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  padding: 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+  transition: transform 0.2s;
+}
+
+.auth-submit-btn:hover { 
+  transform: translateY(-3px); 
+  box-shadow: 0 15px 25px -5px rgba(16, 185, 129, 0.4); 
+}
+
+.toggle-auth-btn {
+  background: none;
+  border: none;
+  color: #10b981;
+  font-weight: 700;
+  margin-top: 32px;
+  cursor: pointer;
+}
+
+
+
 /* --- 3. TOP NAVIGATION --- */
+/* --- STICKY NAVBAR --- */
 .top-nav {
   height: 70px;
-  background: var(--card);
+  background: var(--card); /* Uses your white card variable */
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Pushes Logo to left and User to right */
   align-items: center;
-  padding: 0 5%;
+  padding: 0 50px;
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
 }
 
-.nav-left { display: flex; align-items: center; gap: 30px; }
-.nav-logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); cursor: pointer; }
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 40px; /* Space between logo and nav links */
+}
+
+.nav-logo { 
+  font-size: 1.6rem; 
+  font-weight: 800; 
+  color: var(--primary); 
+  letter-spacing: -1px; 
+  cursor: pointer;
+}
+
+/* --- NAV BUTTONS GROUP --- */
+.nav-links {
+  display: flex;
+  gap: 15px; /* Spacing between Dashboard, Insights, and About */
+}
+
+.nav-link-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-link-btn:hover {
+  color: var(--primary);
+  background: #f1f5f9;
+}
+
+.nav-link-btn.active {
+  background: rgba(16, 185, 129, 0.1); /* Light green tint */
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* --- USER SECTION (RIGHT SIDE) --- */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-name {
+  font-weight: 700;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.logout-btn {
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  color: var(--danger);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: var(--danger);
+  color: white;
+}
 
 /* --- 4. DASHBOARD GRID SYSTEM --- */
 .app-wrapper {
