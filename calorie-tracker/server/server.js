@@ -1,5 +1,5 @@
 const dns = require('node:dns/promises');
-dns.setServers(['8.8.8.8', '8.8.4.4']); // Keep this for your Windows DNS issues
+dns.setServers(['8.8.8.8', '8.8.4.4']); // Keeps your local connection stable
 
 require('dotenv').config();
 const express = require('express');
@@ -13,12 +13,12 @@ const app = express();
 // --- 1. FIXED CORS CONFIGURATION ---
 const allowedOrigins = [
   'http://localhost:5173', 
-  'https://calorie-tracker-dv42.vercel.app'
+  'https://calorie-tracker-dv42.vercel.app' // Your live Vercel URL
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps/Postman) or if in whitelist
+    // Allows requests from your Vercel site and local coding environment
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -47,11 +47,17 @@ const User = mongoose.model('User', new mongoose.Schema({
 
 app.post('/api/auth/signup', async (req, res) => {
   try {
-    const newUser = new User(req.body);
+    const { name, email, password } = req.body;
+    // Check if user already exists to prevent crashes
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).json({ error: "Email already registered" });
+
+    const newUser = new User({ name, email, password });
     await newUser.save();
     res.status(201).json(newUser);
   } catch (error) {
-    res.status(400).json({ error: "Signup failed" });
+    console.error("Signup Error:", error);
+    res.status(500).json({ error: "Signup failed on server" });
   }
 });
 
@@ -59,9 +65,9 @@ app.post('/api/auth/login', async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email, password: req.body.password });
     if (user) res.json(user);
-    else res.status(401).json({ error: "Invalid credentials" });
+    else res.status(401).json({ error: "Invalid email or password" });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server error during login" });
   }
 });
 
@@ -76,14 +82,14 @@ app.get('/api/search', async (req, res) => {
     const response = await axios.get(
       `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${apiKey}&query=${foodName}`
     );
-
     const foods = response.data.foods || [];
     res.json(foods); 
   } catch (error) {
     console.error("❌ USDA API Error:", error.message);
-    res.status(500).json({ error: "Failed to fetch from USDA" });
+    res.status(500).json({ error: "USDA Search failed" });
   }
 });
 
+// Use Render's dynamic port or default to 5000 for local
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
