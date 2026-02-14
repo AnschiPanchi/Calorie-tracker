@@ -12,7 +12,7 @@ const app = express();
 // Middleware
 const allowedOrigins = [
   'http://localhost:5173', // Keep for local testing
-  'https://your-nutri-app.vercel.app' // ADD YOUR LIVE VERCEL URL HERE
+  'https://calorie-tracker-dv42.vercel.app' // ADD YOUR LIVE VERCEL URL HERE
 ];
 
 app.use(cors({
