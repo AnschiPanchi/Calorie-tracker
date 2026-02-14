@@ -10,10 +10,21 @@ const logRoutes = require('./routes/logs.js');
 const app = express();
 
 // Middleware
+const allowedOrigins = [
+  'http://localhost:5173', // Keep for local testing
+  'https://your-nutri-app.vercel.app' // ADD YOUR LIVE VERCEL URL HERE
+];
+
 app.use(cors({
-    origin: ["https://your-nutri-app.vercel.app"], // <-- Put your live frontend link here
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
+  origin: function (origin, callback) {
+    // Allows requests with no origin (like mobile apps) or matching our list
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Blocked by CORS policy'));
+    }
+  },
+  credentials: true
 }));
 app.use(express.json());
 
@@ -50,18 +61,22 @@ app.get('/api/search', async (req, res) => {
   const { foodName } = req.query;
   const apiKey = process.env.USDA_API_KEY;
 
-  if (!apiKey) {
-    console.error("❌ ERROR: USDA_API_KEY is missing!");
-    return res.status(500).json({ error: "Missing API Key" });
-  }
-
   try {
     const response = await axios.get(
       `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${apiKey}&query=${foodName}`
     );
-    res.json(response.data.foods || []);
+
+    // IMPORTANT: Access the .foods property from the response
+    const foods = response.data.foods;
+
+    if (!foods || foods.length === 0) {
+      return res.json([]); // Return empty list if no results
+    }
+
+    res.json(foods); // Send the array of foods to your React frontend
   } catch (error) {
-    res.status(500).json({ error: "USDA Fetch Failed" });
+    console.error("❌ USDA API Error:", error.message);
+    res.status(500).json({ error: "Failed to fetch from USDA" });
   }
 });
 
