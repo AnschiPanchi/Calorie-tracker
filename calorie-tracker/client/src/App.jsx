@@ -78,22 +78,28 @@ function App() {
       </header>
       
       {activeTab === 'dashboard' && (
-        <div className="app-wrapper">
-          {/* ... */}
-          <main className="main-content">
-            <SearchBar onSearch={handleSearch} />
-            {loading ? <div className="loader-container"><div className="spinner"></div></div> : <FoodResult results={results} onAdd={(f, c) => {
-              // Corrected POST route
-              axios.post(`${API_BASE_URL}/api/logs`, { userEmail: user.email, description: f.description, calories: c })
-                .then(res => setLog([res.data, ...log]));
-            }} />}
-          </main>
-          <aside className="sidebar-sticky right-sidebar">
-            {/* Corrected DELETE route */}
-            <HistoryLog log={log} onDelete={(id) => axios.delete(`${API_BASE_URL}/api/logs/${id}`).then(() => setLog(log.filter(l => l._id !== id)))} />
-          </aside>
-        </div>
-      )}
+  <div className="app-wrapper"> {/* This creates the 3-column grid */}
+    
+    {/* COLUMN 1: Calorie Meter Sidebar */}
+    <aside className="sidebar-sticky left-sidebar">
+      <div className="summary-card">
+         {/* ... Your Meter Code ... */}
+      </div>
+    </aside>
+
+    {/* COLUMN 2: Search and Food Results */}
+    <main className="main-content">
+      <SearchBar onSearch={handleSearch} />
+      {/* ... Food Results Grid ... */}
+    </main>
+
+    {/* COLUMN 3: History Bar (Today's Log) */}
+    <aside className="sidebar-sticky right-sidebar">
+      <HistoryLog log={log} onDelete={handleDelete} />
+    </aside>
+
+  </div>
+)}
       {/* ... (stats and about tabs) ... */}
     </div>
   );
