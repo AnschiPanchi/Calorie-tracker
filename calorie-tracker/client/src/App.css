@@ -866,3 +866,89 @@ body {
 .social-btn.github { background: #1e293b; color: white; }
 
 .social-btn:hover { transform: scale(1.05); }
+
+/* --- 18. RESPONSIVE DESIGN (MOBILE & TABLET) --- */
+
+/* For Tablets and Small Laptops (under 1200px) */
+@media (max-width: 1200px) {
+  .app-wrapper {
+    /* Change from 3 columns to 1 column for better spacing */
+    grid-template-columns: 1fr;
+    max-width: 700px;
+    gap: 40px;
+  }
+
+  .results-grid {
+    /* Your fixed grid needs to adjust here too */
+    width: 100% !important;
+    margin-left: 0 !important;
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 cards per row on tablets */
+  }
+
+  .sidebar-sticky {
+    position: static; /* Remove sticky so user can scroll down to history */
+    height: auto;
+  }
+}
+
+/* For Mobile Phones (under 768px) */
+@media (max-width: 768px) {
+  .top-nav {
+    padding: 0 20px;
+    height: auto;
+    flex-direction: column; /* Stack logo and user info */
+    padding-bottom: 15px;
+  }
+
+  .nav-left {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .user-section {
+    margin-top: 15px;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Center everything for mobile */
+  .search-container {
+    padding: 8px;
+  }
+
+  .search-form {
+    flex-direction: column;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr !important; /* 1 card per row on phones */
+  }
+
+  .food-card {
+    min-height: auto;
+  }
+
+  /* Adjust Insight Cards for mobile */
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card h2 {
+    font-size: 3rem;
+  }
+
+  /* Adjust About Page for mobile */
+  .about-main-grid, .features-row {
+    grid-template-columns: 1fr;
+  }
+
+  .about-title {
+    font-size: 2.5rem;
+  }
+}
