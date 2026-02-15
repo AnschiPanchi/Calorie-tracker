@@ -210,14 +210,13 @@ body {
 
 /* --- 5. THE 3-COLUMN RESULTS GRID --- */
 .results-grid {
-  display: grid !important;
-  /* Explicitly forces exactly 3 wide columns */
-  grid-template-columns: repeat(3, 1fr) !important; 
-  gap: 25px;
-  width: 100%;
-  max-width: 850px; /* Aligns perfectly under the search bar */
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 25px;
+    width: 266%;
+    max-width: 850px;
+    margin-left: 46px;
 }
-
 .app-wrapper {
   display: grid;
   /* Protect sidebars and give the middle a fixed starting point */
