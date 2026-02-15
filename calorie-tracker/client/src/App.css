@@ -872,58 +872,78 @@ body {
 /* For Tablets and Small Laptops (under 1200px) */
 @media (max-width: 1200px) {
   .app-wrapper {
-    /* Change from 3 columns to 1 column for better spacing */
-    grid-template-columns: 1fr;
+    display: flex; /* Switched to flex to enable the 'order' property */
+    flex-direction: column;
     max-width: 700px;
-    gap: 40px;
+    gap: 30px;
+    margin: 0 auto;
+  }
+
+  /* --- MOVE HISTORY TO TOP --- */
+  .right-sidebar {
+    order: -1; /* Negative order pulls it above everything else */
+    width: 100%;
+  }
+
+  /* Keep Meter below History but above Food */
+  .left-sidebar {
+    order: 0;
+    width: 100%;
+  }
+
+  /* Food Results stay at the bottom */
+  .main-content {
+    order: 1;
+    width: 100%;
   }
 
   .results-grid {
-    /* Your fixed grid needs to adjust here too */
     width: 100% !important;
     margin-left: 0 !important;
+    max-width: none !important;
     grid-template-columns: repeat(2, 1fr) !important; /* 2 cards per row on tablets */
   }
 
   .sidebar-sticky {
-    position: static; /* Remove sticky so user can scroll down to history */
+    position: static; /* Disable sticky to prevent layout breaks on scroll */
     height: auto;
+    overflow: visible;
   }
 }
 
 /* For Mobile Phones (under 768px) */
 @media (max-width: 768px) {
   .top-nav {
-    padding: 0 20px;
+    padding: 15px 20px;
     height: auto;
-    flex-direction: column; /* Stack logo and user info */
-    padding-bottom: 15px;
+    flex-direction: column;
+    gap: 15px;
   }
 
   .nav-left {
     flex-direction: column;
     gap: 15px;
-    margin-top: 15px;
   }
 
   .nav-links {
     flex-wrap: wrap;
     justify-content: center;
+    gap: 8px;
   }
 
   .user-section {
-    margin-top: 15px;
     width: 100%;
-    justify-content: space-between;
-  }
-
-  /* Center everything for mobile */
-  .search-container {
-    padding: 8px;
+    justify-content: center;
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
   }
 
   .search-form {
     flex-direction: column;
+  }
+
+  .search-btn {
+    padding: 16px;
   }
 
   .results-grid {
@@ -937,18 +957,24 @@ body {
   /* Adjust Insight Cards for mobile */
   .stats-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .stat-card.highlight {
+    padding: 40px 20px;
   }
 
   .stat-card h2 {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   /* Adjust About Page for mobile */
-  .about-main-grid, .features-row {
+  .about-main-grid, 
+  .features-row {
     grid-template-columns: 1fr;
   }
 
   .about-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 }
