@@ -10,6 +10,14 @@
   --border: #e2e8f0;
 }
 
+.main-content {
+  min-width: 0; 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the search bar and grid on the same axis */
+}
+
 * { box-sizing: border-box; }
 
 body { 
@@ -150,12 +158,13 @@ body { margin: 0; background-color: var(--bg-soft); font-family: 'Inter', sans-s
 /* DASHBOARD LAYOUT */
 .app-wrapper {
   display: grid;
-  /* FORCED 3-COLUMN MAPPING */
-  grid-template-columns: 300px 1fr 340px;
+  /* Protect the sidebars and give the middle a MINIMUM width to fit 3 cards */
+  grid-template-columns: 300px minmax(850px, 1fr) 340px; 
   gap: 30px;
-  max-width: 1440px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 30px;
+  align-items: start;
 }
 
 .sidebar-sticky { 
@@ -192,13 +201,15 @@ body { margin: 0; background-color: var(--bg-soft); font-family: 'Inter', sans-s
 
 .overdose-warning {
   color: var(--danger);
-  font-weight: 700;
-  font-size: 0.85rem;
+  font-weight: 800;
+  font-size: 0.9rem;
   background: #fef2f2;
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid #fee2e2;
   display: inline-block;
-  margin-top: 15px;
+  margin-top: 20px;
+  animation: shake 0.5s ease-in-out;
 }
 
 .goal-setting-area {
@@ -238,11 +249,9 @@ body { margin: 0; background-color: var(--bg-soft); font-family: 'Inter', sans-s
 
 /* SEARCH & FOOD GRID (MIDDLE) */
 .search-container {
-  background: var(--card);
-  padding: 12px;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  margin-bottom: 30px;
+  width: 100%;
+  max-width: 850px; /* Limits search bar to match the grid below */
+  margin-bottom: 40px;
 }
 
 .search-form { display: flex; gap: 12px; }
@@ -273,26 +282,36 @@ body { margin: 0; background-color: var(--bg-soft); font-family: 'Inter', sans-s
 }
 
 /* THE 3-IN-A-ROW GRID */
-.results-grid { 
-  display: grid !important; 
+.results-grid {
+  display: grid !important;
+  /* Forces 3 cards side-by-side */
   grid-template-columns: repeat(3, 1fr) !important; 
-  gap: 20px; 
+  gap: 25px;
+  width: 100%;
+  max-width: 850px; /* Limits width to align perfectly under search bar */
+  margin: 0 auto;
 }
 
 /* FOOD CARD STYLING */
 .food-card {
   background: var(--card);
-  border-radius: 18px;
+  border-radius: 20px;
   border: 1px solid var(--border);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
+  min-height: 400px; /* Restores the 'reasonable size' */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.food-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-
-.card-image-wrapper { position: relative; height: 160px; overflow: hidden; }
+.food-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+.card-image-wrapper {
+  height: 180px; /* Fixed height for consistent image scaling */
+  width: 100%;
+}
 .food-image { width: 100%; height: 100%; object-fit: cover; }
 
 .cal-tag {
@@ -378,6 +397,15 @@ body { margin: 0; background-color: var(--bg-soft); font-family: 'Inter', sans-s
   background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);
   border: 2px solid var(--primary);
   grid-column: 1 / -1;
+}
+.meter-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* RESPONSIVE DESIGN */
