@@ -656,29 +656,213 @@ body {
 }
 
 .stats-page-container {
-  padding: 60px 20px;
   display: flex;
   justify-content: center;
+  padding: 80px 20px;
+  min-height: calc(100vh - 70px);
+  background-color: var(--bg);
 }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
-  max-width: 1000px;
+  grid-template-columns: repeat(2, 1fr); /* Two columns for the bottom row */
+  gap: 35px; /* Larger gap for a breathable layout */
+  max-width: 1100px;
   width: 100%;
 }
 
 .stat-card.highlight {
-  grid-column: 1 / -1;
-  border: 2px solid #10b981;
-  background: #f0fdf4;
+  grid-column: 1 / -1; /* Spans across both columns */
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+  border: 2px solid var(--primary);
+  padding: 80px 40px; /* Much larger padding for impact */
+  transform: scale(1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stat-card.highlight h2 {
+  font-size: 5rem; /* Huge numbers for the peak intake */
+  color: #0f172a;
+  letter-spacing: -2px;
+}
+.stat-card h2 {
+  font-size: 3.8rem;
+  font-weight: 900;
+  color: #1e293b;
+  margin: 0;
+}
+
+.stat-card h2 span {
+  font-size: 1.4rem;
+  color: var(--primary);
+  margin-left: 10px;
+  font-weight: 700;
 }
 
 .stat-card {
+  background: var(--card);
+  padding: 50px 30px;
+  border-radius: 32px; /* Extra rounded corners like the old design */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+  text-align: center;
+  border: 1px solid rgba(226, 232, 240, 0.5);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.stat-card:hover {
+  transform: translateY(-12px); /* Higher lift than the dashboard cards */
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+  border-color: var(--primary);
+}
+
+.stat-card p {
+  margin-top: 15px;
+  font-weight: 600;
+  color: var(--text-sub);
+  font-size: 1.1rem;
+}
+
+.stat-card label {
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-sub);
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+/* --- ABOUT PAGE STYLES --- */
+.about-page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.about-hero {
+  margin-bottom: 60px;
+}
+
+.about-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+.about-title span {
+  color: var(--primary);
+}
+
+.about-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-sub);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* MISSION & TECH GRID */
+.about-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.about-section {
   background: white;
   padding: 40px;
   border-radius: 24px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  text-align: center;
+  box-shadow: var(--shadow-md);
 }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+/* TECH TAGS */
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  background: #f1f5f9;
+  color: #475569;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* FEATURE CARDS ROW */
+.features-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-bottom: 60px;
+}
+
+.feature-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  border: 1px solid #f1f5f9;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  border-color: var(--primary);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+/* FOOTER & BUTTONS */
+.about-footer p {
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-btn {
+  padding: 12px 30px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.2s;
+}
+
+.social-btn.linkedin { background: #0077b5; color: white; }
+.social-btn.github { background: #1e293b; color: white; }
+
+.social-btn:hover { transform: scale(1.05); }
