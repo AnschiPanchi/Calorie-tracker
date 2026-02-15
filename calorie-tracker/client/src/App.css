@@ -370,6 +370,186 @@ body {
   gap: 20px; 
 }
 
+/* --- CALORIE METER SIDEBAR --- */
+.sidebar-sticky.left-sidebar {
+  padding: 20px;
+}
+
+.summary-card {
+  background: var(--card);
+  padding: 40px 20px;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* THE FIX: Meter Container Dimensions */
+.meter-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.total-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.total-display h2 {
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0;
+  color: var(--text-main);
+}
+
+.total-display span {
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* GOAL SETTING AREA */
+.goal-setting-area {
+  width: 100%;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.goal-setting-area label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.goal-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.goal-input-wrapper:focus-within {
+  border-color: var(--primary);
+  background: white;
+}
+
+.goal-input-wrapper input {
+  background: transparent;
+  border: none;
+  width: 80px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text-main);
+  outline: none;
+}
+
+/* --- FOOD RESULTS GRID --- */
+.results-grid {
+  display: grid;
+  /* Creates a 3-column layout that adjusts automatically */
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 25px;
+  margin-top: 30px;
+}
+
+/* --- INDIVIDUAL FOOD CARD --- */
+.food-card {
+  background: var(--card);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.food-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px; /* Fixed height for consistent cards */
+  overflow: hidden;
+}
+
+.food-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures images don't stretch */
+}
+
+.cal-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(16, 185, 129, 0.9);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  backdrop-filter: blur(4px);
+}
+
+.card-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-grow: 1;
+}
+
+.food-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-transform: capitalize;
+  margin: 0;
+}
+
+.add-btn-full {
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.add-btn-full:hover {
+  background: var(--primary-dark);
+}
+
 /* --- 6. MEDIA QUERIES (THE CRITICAL FIX) --- */
 @media (max-width: 1200px) {
   .app-wrapper {
