@@ -38,7 +38,6 @@ function App() {
     }
   }, [user, log]);
 
-  // FIXED: Added the missing handleDelete function
   const handleDelete = (id) => {
     axios.delete(`${API_BASE_URL}/api/logs/${id}`)
       .then(() => setLog(log.filter(l => l._id !== id)))
@@ -86,6 +85,7 @@ function App() {
         </div>
       </header>
 
+      {/* --- DASHBOARD TAB --- */}
       {activeTab === 'dashboard' && (
         <div className="app-wrapper"> 
           {/* COLUMN 1: Meter */}
@@ -114,6 +114,7 @@ function App() {
                     <span>kcal</span>
                   </div>
                </div>
+               {total > goal && <div className="overdose-warning">Capacity Exceeded!</div>}
             </div>
           </aside>
 
@@ -140,8 +141,43 @@ function App() {
           </aside>
         </div>
       )}
-      
-      {/* (Keep your existing Stats/About Tab code here) */}
+
+      {/* --- INSIGHTS TAB (FIXED: Added this block back) --- */}
+      {activeTab === 'stats' && (
+        <div className="stats-page-container">
+          <div className="stats-grid">
+            <div className="stat-card highlight">
+              <label>Peak Intake</label>
+              <h2>{stats.peakIntake.calories}<span>kcal</span></h2>
+              <p>Achieved on {stats.peakIntake.date !== 'No data' ? new Date(stats.peakIntake.date).toLocaleDateString() : 'No data'}</p>
+            </div>
+            <div className="stat-card">
+              <label>This Week</label>
+              <h2>{stats.weekTotal}<span>kcal</span></h2>
+            </div>
+            <div className="stat-card">
+              <label>This Month</label>
+              <h2>{stats.monthTotal}<span>kcal</span></h2>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- ABOUT TAB (FIXED: Added this block back) --- */}
+      {activeTab === 'about' && (
+        <div className="about-page-container">
+          <div className="about-card">
+            <div className="about-header">
+              <h1>About NutriTrack</h1>
+              <p>Your personal companion for health and nutrition tracking.</p>
+            </div>
+            <div className="about-content">
+              <p>Built as a high-performance calorie management platform.</p>
+              <p>Tech Stack: React, Node.js, Express, and MongoDB.</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
