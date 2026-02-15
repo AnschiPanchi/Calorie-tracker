@@ -88,7 +88,6 @@ function App() {
       {/* --- DASHBOARD TAB --- */}
       {activeTab === 'dashboard' && (
         <div className="app-wrapper"> 
-          {/* COLUMN 1: Meter */}
           <aside className="sidebar-sticky left-sidebar">
             <div className="summary-card">
                <div className="meter-container">
@@ -118,7 +117,6 @@ function App() {
             </div>
           </aside>
 
-          {/* COLUMN 2: Middle (Search) */}
           <main className="main-content">
             <div className="search-container">
               <SearchBar onSearch={handleSearch} />
@@ -135,14 +133,13 @@ function App() {
             )}
           </main>
 
-          {/* COLUMN 3: Right (History) */}
           <aside className="sidebar-sticky right-sidebar">
             <HistoryLog log={log} onDelete={handleDelete} />
           </aside>
         </div>
       )}
 
-      {/* --- INSIGHTS TAB (FIXED: Added this block back) --- */}
+      {/* --- INSIGHTS TAB --- */}
       {activeTab === 'stats' && (
         <div className="stats-page-container">
           <div className="stats-grid">
@@ -163,17 +160,66 @@ function App() {
         </div>
       )}
 
-      {/* --- ABOUT TAB (FIXED: Added this block back) --- */}
+      {/* --- ABOUT TAB --- */}
       {activeTab === 'about' && (
         <div className="about-page-container">
-          <div className="about-card">
-            <div className="about-header">
-              <h1>About NutriTrack</h1>
-              <p>Your personal companion for health and nutrition tracking.</p>
+          <div className="about-hero">
+            <h1 className="about-title">About <span>NutriTrack</span></h1>
+            <p className="about-subtitle">
+              A premium health platform developed by <strong>Ansh Gupta</strong>, a B.Tech Computer Science student at KCCITM.
+            </p>
+          </div>
+
+          <div className="about-main-grid">
+            <section className="about-section">
+              <div className="section-header">
+                <span className="icon">🚀</span>
+                <h2>Our Mission</h2>
+              </div>
+              <p>
+                NutriTrack aims to simplify health management by providing real-time nutritional insights 
+                and personalized tracking to help users reach their fitness goals.
+              </p>
+            </section>
+
+            <section className="about-section">
+              <div className="section-header">
+                <span className="icon">💻</span>
+                <h2>Technical Stack</h2>
+              </div>
+              <div className="tech-tags">
+                <span className="tag">React.js</span>
+                <span className="tag">Node.js</span>
+                <span className="tag">MongoDB</span>
+                <span className="tag">Express</span>
+                <span className="tag">Nutrition API</span>
+              </div>
+            </section>
+          </div>
+
+          <div className="features-row">
+            <div className="feature-card">
+              <div className="feature-icon">📊</div>
+              <h3>Smart Tracker</h3>
+              <p>Visual calorie ring with dynamic color-coding based on your limits.</p>
             </div>
-            <div className="about-content">
-              <p>Built as a high-performance calorie management platform.</p>
-              <p>Tech Stack: React, Node.js, Express, and MongoDB.</p>
+            <div className="feature-card">
+              <div className="feature-icon">🥗</div>
+              <h3>USDA Verified</h3>
+              <p>Reliable data sourced from global nutritional databases.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🔐</div>
+              <h3>Secure History</h3>
+              <p>Your logs are saved securely and can be managed instantly.</p>
+            </div>
+          </div>
+
+          <div className="about-footer">
+            <p>Interested in my work? Let's connect!</p>
+            <div className="footer-links">
+              <a href="#" className="social-btn linkedin">LinkedIn</a>
+              <a href="#" className="social-btn github">GitHub</a>
             </div>
           </div>
         </div>
