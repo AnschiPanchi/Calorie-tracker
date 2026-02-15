@@ -1,4 +1,4 @@
-/* GLOBAL THEME & RESET */
+/* --- 1. GLOBAL THEME & RESET --- */
 :root {
   --primary: #10b981;
   --primary-dark: #059669;
@@ -7,44 +7,531 @@
   --card: #ffffff;
   --text-main: #1e293b;
   --text-sub: #64748b;
+  --text-dark: #0f172a;
   --border: #e2e8f0;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+  --shadow-md: 0 10px 25px rgba(0,0,0,0.05);
 }
 
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+body { 
+  background-color: var(--bg); 
+  font-family: 'Inter', sans-serif; 
+  color: var(--text-main); 
+  line-height: 1.5;
+}
+
+/* --- 2. TOP NAVIGATION (top-nav) --- */
+.top-nav {
+  height: 70px;
+  background: var(--card);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  border-bottom: 1px solid var(--border);
+  position: sticky; /* Keeps nav visible while scrolling */
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Logo & Nav Links */
+.nav-left { 
+  display: flex; 
+  align-items: center; 
+  gap: 40px; 
+}
+
+.nav-logo { 
+  font-size: 1.6rem; 
+  font-weight: 800; 
+  color: var(--primary); 
+  letter-spacing: -1px; 
+  cursor: pointer;
+  user-select: none;
+}
+.nav-logo:hover {
+  opacity: 0.8;
+}
+
+.nav-links { 
+  display: flex; 
+  gap: 12px; 
+}
+
+.nav-link-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-link-btn:hover {
+  background: #f1f5f9;
+  color: var(--primary);
+}
+
+.nav-link-btn.active {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--primary);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+/* User Section */
+.user-section { 
+  display: flex; 
+  align-items: center; 
+  gap: 20px; 
+}
+
+.user-name {
+  font-weight: 700;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+}
+
+.logout-btn {
+  background: #f1f5f9;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: #fee2e2;
+  color: var(--danger);
+}
+
+/* --- 3. SEARCH SECTION (SearchBar.jsx) --- */
+.search-container {
+  background: var(--card);
+  padding: 12px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 40px; /* Spacing before the food cards start */
+  width: 100%;
+  max-width: 800px; /* Aligns with the 3-column grid width later */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-form { 
+  display: flex; 
+  gap: 12px; 
+}
+
+.search-input {
+  flex: 1; /* Takes up all available space */
+  padding: 16px 24px;
+  border: 2px solid #f1f5f9;
+  border-radius: 16px;
+  outline: none;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  transition: all 0.2s ease;
+}
+
+.search-input:focus { 
+  border-color: var(--primary); 
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+.search-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0 32px;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.search-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.search-btn:active {
+  transform: translateY(0);
+}
+
+/* Loader for the search process */
+.loader-container { 
+  display: flex; 
+  justify-content: center; 
+  padding: 60px; 
+  width: 100%;
+}
+
+.spinner {
+  width: 45px; 
+  height: 45px;
+  border: 5px solid #f1f5f9;
+  border-top: 5px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 
+  100% { transform: rotate(360deg); } 
+}
+
+/* --- 4. THE MAIN CONTENT WRAPPER --- */
 .main-content {
   min-width: 0; 
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centers the search bar and grid on the same axis */
+  align-items: center; /* This centers both search and grid */
 }
 
-* { box-sizing: border-box; }
+/* --- 5. THE 3-COLUMN RESULTS GRID --- */
+.results-grid {
+  display: grid !important;
+  /* FORCES 3 CARDS HORIZONTALLY */
+  grid-template-columns: repeat(3, 1fr) !important; 
+  gap: 20px;
+  width: 100%;
+  max-width: 800px; /* Perfectly matches the search bar width */
+  margin: 0 auto;
+}
 
-body { 
+/* --- 6. INDIVIDUAL FOOD CARD (FoodCard.jsx) --- */
+.food-card {
+  background: var(--card);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 360px; /* Professional, uniform height */
+}
+
+.food-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Image Wrapper and Scaling */
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  background: #f1f5f9;
+}
+
+.food-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Prevents image stretching */
+}
+
+.image-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.cal-tag {
+  background: rgba(16, 185, 129, 0.9);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.75rem;
+  backdrop-filter: blur(4px);
+}
+
+/* Card Content Info */
+.card-info {
+  padding: 18px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.food-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-transform: capitalize;
+  margin-bottom: 15px;
+  line-height: 1.4;
+  /* Keeps titles consistent at 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.add-btn-full {
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.add-btn-full:hover {
+  background: var(--primary-dark);
+}
+
+/* --- 7. SIDEBAR LAYOUT (app-wrapper) --- */
+.app-wrapper {
+  display: grid;
+  /* Protect the sidebars: 300px, 1fr (Middle), 340px */
+  grid-template-columns: 300px 1fr 340px;
+  gap: 30px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 30px;
+  align-items: start; /* Prevents stretching to page height */
+}
+
+.sidebar-sticky { 
+  position: sticky; 
+  top: 100px; 
+  height: calc(100vh - 130px); 
+  overflow-y: auto; 
+}
+
+/* --- 8. CALORIE METER (Left Sidebar) --- */
+.summary-card {
+  background: var(--card);
+  padding: 40px 20px;
+  border-radius: 24px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.meter-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.total-display { 
+  position: absolute; 
+  text-align: center; 
+}
+
+.total-display h2 { 
+  font-size: 3.5rem; 
+  font-weight: 900; 
   margin: 0; 
-  background-color: var(--bg); 
-  font-family: 'Inter', sans-serif; 
   color: var(--text-main); 
+  line-height: 1;
 }
 
-/* AUTH / LOGIN PAGE (Vibrant & Centered) */
-/* GLOBAL THEME & CLEAN BACKGROUND */
-:root {
-  --primary: #10b981;
-  --primary-dark: #059669;
-  --bg-soft: #f8fafc; 
-  --card-white: #ffffff;
-  --text-dark: #0f172a;
+.total-display span { 
+  font-size: 0.9rem; 
+  color: var(--text-sub); 
+  font-weight: 600; 
 }
 
-body { margin: 0; background-color: var(--bg-soft); font-family: 'Inter', sans-serif; }
+/* The Capacity Exceeded Alert */
+.overdose-warning {
+  color: var(--danger);
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: #fef2f2;
+  padding: 10px 14px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-top: 15px;
+  border: 1px solid #fee2e2;
+}
 
-/* AUTH OVERLAY - PERFECTLY CENTERED & CLEAN */
+/* --- 9. GOAL SETTING AREA --- */
+.goal-setting-area {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #f1f5f9;
+  text-align: left;
+}
+
+.goal-setting-area label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-sub);
+  display: block;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.goal-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: border-color 0.2s;
+}
+
+.goal-input-wrapper:focus-within {
+  border-color: var(--primary);
+  background: white;
+}
+
+.goal-input-wrapper input {
+  background: transparent;
+  border: none;
+  width: 100%;
+  font-weight: 800;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.goal-input-wrapper span {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.9rem;
+  margin-left: 8px;
+}
+
+/* --- 10. HISTORY LOG (Right Sidebar) --- */
+.history-container {
+  background: var(--card);
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  max-height: 100%; /* Keeps it contained within the sidebar-sticky parent */
+}
+
+.history-header { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  margin-bottom: 20px; 
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f1f5f9; 
+}
+
+.history-header h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+/* Individual Log Items */
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: #fdfdfd;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+
+.log-item:hover {
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.log-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 2px;
+}
+
+.log-name { 
+  font-weight: 700; 
+  color: var(--text-dark); 
+  font-size: 0.95rem; 
+  text-transform: capitalize;
+}
+
+.log-calories { 
+  color: var(--primary); 
+  font-weight: 800; 
+  font-size: 0.85rem; 
+}
+
+/* Delete Button */
+.delete-log-btn {
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  color: var(--danger);
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.delete-log-btn:hover {
+  background: var(--danger);
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Empty State */
+.empty-state {
+  padding: 40px 10px;
+  text-align: center;
+  color: var(--text-sub);
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* --- 11. AUTH OVERLAY (Perfect Centering) --- */
 .auth-overlay {
   position: fixed;
   inset: 0;
+  /* Soft vibrant gradient background */
   background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.1), transparent),
-              radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), var(--bg-soft));
+              radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), var(--bg));
   display: flex;
   justify-content: center; 
   align-items: center;     
@@ -52,21 +539,39 @@ body { margin: 0; background-color: var(--bg-soft); font-family: 'Inter', sans-s
 }
 
 .auth-card {
-  background: var(--card-white);
+  background: var(--card);
   padding: 48px;
   border-radius: 32px;
   width: 100%;
   max-width: 440px;
+  /* Stronger shadow to make it pop */
   box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.15);
   text-align: center;
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border: 1px solid var(--border);
 }
 
-.auth-header h2 { font-size: 2.4rem; font-weight: 900; color: var(--text-dark); margin: 0; letter-spacing: -1px; }
-.auth-header p { color: #64748b; margin: 12px 0 32px; font-weight: 500; font-size: 1.1rem; }
+.auth-header h2 { 
+  font-size: 2.4rem; 
+  font-weight: 900; 
+  color: var(--text-dark); 
+  margin: 0; 
+  letter-spacing: -1px; 
+}
 
-/* FORM & VIBRANT INPUTS */
-.auth-form { display: flex; flex-direction: column; gap: 24px; text-align: left; }
+.auth-header p { 
+  color: var(--text-sub); 
+  margin: 12px 0 32px; 
+  font-weight: 500; 
+  font-size: 1.1rem; 
+}
+
+/* --- 12. FORM & INPUTS --- */
+.auth-form { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 24px; 
+  text-align: left; 
+}
 
 .input-group label { 
   display: block;
@@ -93,6 +598,7 @@ body { margin: 0; background-color: var(--bg-soft); font-family: 'Inter', sans-s
   box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.15); 
 }
 
+/* --- 13. AUTH BUTTONS --- */
 .auth-submit-btn {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
@@ -120,309 +626,21 @@ body { margin: 0; background-color: var(--bg-soft); font-family: 'Inter', sans-s
   margin-top: 32px;
   cursor: pointer;
   font-size: 1rem;
-  opacity: 0.8;
   transition: opacity 0.2s;
 }
 
-.toggle-auth-btn:hover { opacity: 1; text-decoration: underline; }
-
-/* STICKY NAVBAR */
-.top-nav {
-  height: 70px;
-  background: var(--card);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 50px;
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+.toggle-auth-btn:hover { 
+  opacity: 0.8; 
+  text-decoration: underline; 
 }
 
-.nav-logo { font-size: 1.6rem; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
-
-.user-section { display: flex; align-items: center; gap: 15px; }
-
-.logout-btn {
-  background: #f1f5f9;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-weight: 700;
-  color: #64748b;
-  cursor: pointer;
-}
-
-/* DASHBOARD LAYOUT */
-.app-wrapper {
-  display: grid;
-  /* Protect the sidebars and give the middle a MINIMUM width to fit 3 cards */
-  grid-template-columns: 300px minmax(850px, 1fr) 340px; 
-  gap: 30px;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 30px;
-  align-items: start;
-}
-
-.sidebar-sticky { 
-  position: -webkit-sticky; 
-  position: sticky; 
-  top: 100px; 
-  height: calc(100vh - 130px); 
-  overflow-y: auto; 
-}
-
-.sidebar-sticky::-webkit-scrollbar { width: 4px; }
-.sidebar-sticky::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-
-/* CALORIE METER (LEFT) */
-.summary-card {
-  background: var(--card);
-  padding: 40px 20px;
-  border-radius: 24px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  text-align: center;
-}
-
-.meter-container {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* Error banner for incorrect logins */
+.error-banner {
+  background: #fef2f2;
+  color: var(--danger);
+  padding: 12px;
+  border-radius: 12px;
   margin-bottom: 20px;
-}
-
-.total-display { position: absolute; text-align: center; }
-.total-display h2 { font-size: 3.5rem; font-weight: 900; margin: 0; color: var(--text-main); }
-.total-display span { font-size: 0.9rem; color: var(--text-sub); font-weight: 600; }
-
-.overdose-warning {
-  color: var(--danger);
-  font-weight: 800;
-  font-size: 0.9rem;
-  background: #fef2f2;
-  padding: 10px 16px;
-  border-radius: 12px;
-  border: 1px solid #fee2e2;
-  display: inline-block;
-  margin-top: 20px;
-  animation: shake 0.5s ease-in-out;
-}
-
-.goal-setting-area {
-  margin-top: 25px;
-  padding-top: 20px;
-  border-top: 1px solid #f1f5f9;
-  text-align: left;
-}
-
-.goal-setting-area label {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--text-sub);
-  display: block;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-
-.goal-input-wrapper {
-  display: flex;
-  align-items: center;
-  background: #f8fafc;
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-}
-
-.goal-input-wrapper input {
-  background: transparent;
-  border: none;
-  width: 100%;
-  font-weight: 800;
-  color: var(--text-main);
-  font-size: 1rem;
-  outline: none;
-}
-
-/* SEARCH & FOOD GRID (MIDDLE) */
-.search-container {
-  width: 100%;
-  max-width: 850px; /* Limits search bar to match the grid below */
-  margin-bottom: 40px;
-}
-
-.search-form { display: flex; gap: 12px; }
-
-.search-input {
-  flex: 1;
-  padding: 14px 20px;
-  border: 2px solid #f1f5f9;
-  border-radius: 12px;
-  outline: none;
-  font-size: 1rem;
-}
-
-.search-input:focus { border-color: var(--primary); }
-
-.search-btn {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 0 28px;
-  border-radius: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-/* THE 3-IN-A-ROW GRID */
-.results-grid {
-  display: grid !important;
-  /* Forces 3 cards side-by-side */
-  grid-template-columns: repeat(3, 1fr) !important; 
-  gap: 25px;
-  width: 100%;
-  max-width: 850px; /* Limits width to align perfectly under search bar */
-  margin: 0 auto;
-}
-
-/* FOOD CARD STYLING */
-.food-card {
-  background: var(--card);
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  min-height: 400px; /* Restores the 'reasonable size' */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.food-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-.card-image-wrapper {
-  height: 180px; /* Fixed height for consistent image scaling */
-  width: 100%;
-}
-.food-image { width: 100%; height: 100%; object-fit: cover; }
-
-.cal-tag {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(16, 185, 129, 0.9);
-  color: white;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-weight: 700;
-  font-size: 0.75rem;
-  backdrop-filter: blur(4px);
-}
-
-/* HISTORY LOG (RIGHT) */
-.history-container {
-  background: var(--card);
-  padding: 24px;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-}
-
-.log-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 18px;
-  background: #fdfdfd;
-  border: 1px solid #f1f5f9;
-  border-radius: 14px;
-  margin-bottom: 12px;
-}
-
-.delete-log-btn {
-  background: #fef2f2;
-  border: 1px solid #fee2e2;
-  color: var(--danger);
-  padding: 8px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-/* NAVBAR LINKS */
-.nav-left { display: flex; align-items: center; gap: 30px; }
-.nav-links { display: flex; gap: 12px; }
-
-.nav-link-btn {
-  background: transparent;
-  border: 1px solid #e2e8f0;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 0.9rem;
   font-weight: 600;
-  color: #64748b;
-  cursor: pointer;
+  border: 1px solid #fee2e2;
 }
-
-.nav-link-btn.active {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
-  border-color: #10b981;
-}
-
-/* INSIGHTS PAGE */
-.stats-page-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 60px 20px;
-  min-height: calc(100vh - 70px);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-  max-width: 1000px;
-  width: 100%;
-}
-
-.stat-card.highlight {
-  background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);
-  border: 2px solid var(--primary);
-  grid-column: 1 / -1;
-}
-.meter-container {
-  position: relative;
-  width: 220px;
-  height: 220px;
-  margin: 0 auto 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* RESPONSIVE DESIGN */
-@media (max-width: 1200px) {
-  .app-wrapper { grid-template-columns: 280px 1fr; gap: 20px; }
-  .right-sidebar { grid-column: 1 / -1; }
-}
-
-@media (max-width: 992px) {
-  .results-grid { grid-template-columns: repeat(2, 1fr) !important; }
-}
-
-@media (max-width: 768px) {
-  .app-wrapper { grid-template-columns: 1fr; padding: 15px; }
-  .sidebar-sticky { position: static; height: auto; }
-  .results-grid { grid-template-columns: 1fr !important; }
-  .user-name { display: none; }
-}
-
-@keyframes spin { 100% { transform: rotate(360deg); } }
