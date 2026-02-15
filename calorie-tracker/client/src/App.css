@@ -334,16 +334,18 @@ body {
 }
 
 .main-content {
-  min-width: 0; /* CRITICAL: Prevents grid items from overflowing */
+  min-width: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center; /* Centers everything (Search + Grid) horizontally */
 }
 
+/* --- 2. SEARCH CONTAINER ALIGNMENT --- */
 .search-container {
   width: 100%;
-  max-width: 600px; /* Optional: keeps the search bar from getting too wide */
-  margin: 0 auto 30px;
+  max-width: 800px; /* Limits width to match the grid below */
+  margin: 0 auto 40px;
 }
 
 /* Ensure the History Bar (Right Sidebar) is sticky while scrolling */
@@ -363,10 +365,14 @@ body {
 }
 
 /* --- 5. FOOD GRID --- */
-.results-grid { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-  gap: 20px; 
+.results-grid {
+  display: grid;
+  /* Forces exactly 3 columns with a fixed minimum width to prevent shrinking */
+  grid-template-columns: repeat(3, minmax(200px, 1fr)); 
+  gap: 25px;
+  width: 100%;
+  max-width: 850px; /* Adjust this to perfectly align with your search bar width */
+  margin: 0 auto;   /* Keeps the entire grid centered */
 }
 
 /* --- CALORIE METER SIDEBAR --- */
@@ -478,8 +484,8 @@ body {
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  min-height: 380px; /* Ensures all cards are uniform height */
-  width: 100%; /* Forces the card to fill the grid slot */
+  width: 100%; /* Ensures card fills the grid slot */
+  transition: transform 0.3s ease;
 }
 
 .food-card:hover {
